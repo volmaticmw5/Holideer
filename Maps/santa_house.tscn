@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Maps/data.hterrain" type="Resource" id=1]
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=2]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/oScene.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Textures/uvs.jpg" type="Texture" id=5]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+mode = 0
+textures = [ [ ExtResource( 5 ) ], [ null ] ]
+
+[node name="santa_house" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="HTerrain" type="Spatial" parent="."]
+script = ExtResource( 2 )
+_terrain_data = ExtResource( 1 )
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 1 )
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
