@@ -1,9 +1,0 @@
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\bin\Debug\Holideer.dll
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\bin\Debug\Holideer.pdb
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.csproj.AssemblyReference.cache
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.AssemblyInfoInputs.cache
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.AssemblyInfo.cs
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.csproj.CoreCompileInputs.cache
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.dll
-C:\Users\Desktop\Desktop\Holideer\.mono\temp\obj\Debug\Holideer.pdb
