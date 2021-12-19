@@ -33,6 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameManager="*res://Scripts/GameManager.cs"
+Gui="*res://Prefabs/GUI.tscn"
 
 [display]
 

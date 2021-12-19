@@ -22,12 +22,33 @@ public class PlayerControls : KinematicBody
     public override void _Ready()
     {
         base._Ready();
+        SetMeta("type", "player");
         anim = GetNode<AnimationTree>(AnimationTree);
     }
 
     public override void _Input(InputEvent @event)
     {
-        
+        if(@event is InputEventMouseButton btn)
+        {
+            if(btn.IsPressed() && btn.ButtonIndex == 1 && !GameManager.Instance.oPlayer.isAttacking)
+            {
+                if (GameManager.Instance.oPlayer.CurrentWeapon == null)
+                    anim.Set("parameters/Punch/active", true);
+                else
+                    anim.Set("parameters/AttackMeele/active", true);
+
+                GameManager.Instance.oPlayer.isAttacking = true;
+            }
+        }
+    }
+
+    public override void _Process(float delta)
+    {
+        base._Process(delta);
+
+        anim.Set("parameters/AttackSpeed/scale", GameManager.Instance.oPlayer.GetAttackSpeed());
+        if (GameManager.Instance.oPlayer.isAttacking && !(bool)anim.Get("parameters/AttackMeele/active") && !(bool)anim.Get("parameters/Punch/active"))
+            GameManager.Instance.oPlayer.isAttacking = false;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -47,17 +68,20 @@ public class PlayerControls : KinematicBody
         anim.Set("parameters/GroundState/current", IsOnFloor() ? 1 : 0);
 
         // Apply direction
-        Vector3 direction;
-        if (isJumping)
-            direction = (Transform.basis.z * motionTarget.y + Transform.basis.x * motionTarget.x) * MovementSpeedInAir;
-        else
-            direction = (Transform.basis.z * motionTarget.y + Transform.basis.x * motionTarget.x) * MovementSpeed;
+        Vector3 direction = Vector3.Zero;
+        if(!GameManager.Instance.oPlayer.isAttacking)
+        {
+            if (isJumping)
+                direction = (Transform.basis.z * motionTarget.y + Transform.basis.x * motionTarget.x) * MovementSpeedInAir;
+            else
+                direction = (Transform.basis.z * motionTarget.y + Transform.basis.x * motionTarget.x) * MovementSpeed;
+        }
         velocity += direction;
 
         // Jump
         if (Input.IsKeyPressed((int)KeyList.Space) && IsOnFloor())
         {
-            if (!isJumping)
+            if (!isJumping && !GameManager.Instance.oPlayer.isAttacking)
             {
                 jumpTimeLeft = JumpTime;
                 isJumping = true;

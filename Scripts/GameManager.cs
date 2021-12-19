@@ -6,6 +6,7 @@ public class GameManager : Node
 	public static GameManager Instance;
 	public Player oPlayer;
 	public bool sceneInitialized = false;
+	public int GameDeltaTime;
 
 	private static readonly string pPlayer = "res://Prefabs/Player.tscn";
 
@@ -14,11 +15,23 @@ public class GameManager : Node
 		base._Ready();
 		Instance = this;
 
+		Tick();
+		GameDeltaTime = 0;
+
 		// For debug
 		//LoadGameScene(GAME_SCENES.SANTA_HOUSE);
 	}
 
-	public void LoadGameScene(GAME_SCENES scene)
+	private async void Tick()
+    {
+		while(true)
+        {
+			GameDeltaTime++;
+			await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+        }
+    }
+
+    public void LoadGameScene(GAME_SCENES scene)
 	{
 		GD.Print("Loading scene " + scene.ToString());
 		PackedScene pscn = GameScenes.GetPackedScene(scene);

@@ -48,10 +48,9 @@ public class CameraOrbit : Spatial
         if(isRotating)
         {
             Vector3 rot = new Vector3(mouseDelta.y, mouseDelta.x, 0f) * MouseSensitivity * delta;
-            rot.x = Mathf.Clamp(rot.x, MinMaxAngle.x, MinMaxAngle.y);
 
             // Rotate the camera
-            RotationDegrees = new Vector3(RotationDegrees.x + rot.x, RotationDegrees.y, RotationDegrees.z);
+            RotationDegrees = new Vector3(Mathf.Clamp(RotationDegrees.x + rot.x, MinMaxAngle.x, MinMaxAngle.y), RotationDegrees.y, RotationDegrees.z);
             // Rotate the player
             player.RotationDegrees -= new Vector3(player.RotationDegrees.x, rot.y, player.RotationDegrees.z);
             // Reset mouse delta
