@@ -7,6 +7,8 @@ public class GameManager : Node
 	public Player oPlayer;
 	public bool sceneInitialized = false;
 	public int GameDeltaTime;
+	private QuestManager qm;
+	public Dialog Dialog;
 
 	private static readonly string pPlayer = "res://Prefabs/Player.tscn";
 
@@ -14,12 +16,19 @@ public class GameManager : Node
 	{
 		base._Ready();
 		Instance = this;
-
 		Tick();
 		GameDeltaTime = 0;
+		Dialog = new Dialog();
 
-		// For debug
-		//LoadGameScene(GAME_SCENES.SANTA_HOUSE);
+#if DEBUG
+		qm = new QuestManager(1);
+#endif
+	}
+
+	public void NewGame()
+    {
+		qm = new QuestManager(1);
+		LoadGameScene(GAME_SCENES.SANTA_HOUSE);
 	}
 
 	private async void Tick()
@@ -27,13 +36,17 @@ public class GameManager : Node
 		while(true)
         {
 			GameDeltaTime++;
+			QuestManager.HighlightCurrentQuestNpc();
 			await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+
+			GD.Print(QuestManager.Instance.CurrentQuestId);
         }
     }
 
     public void LoadGameScene(GAME_SCENES scene)
 	{
 		GD.Print("Loading scene " + scene.ToString());
+		QuestManager.Instance.ResetNpcs();
 		PackedScene pscn = GameScenes.GetPackedScene(scene);
 		GetTree().ChangeSceneTo(pscn);
 		sceneInitialized = false;

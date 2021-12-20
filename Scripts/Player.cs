@@ -89,4 +89,14 @@ public class Player : Node
     {
         playerControls.GetPushedBack();
     }
+
+    public void LockPlayer()
+    {
+        playerControls.canMove = false;
+    }
+
+    public void UnlockPlayer()
+    {
+        playerControls.canMove = true;
+    }
 }

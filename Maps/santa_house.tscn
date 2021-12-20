@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Prefabs/fence_crooked.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/raindeer_normal.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Prefabs/helper.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/oScene.cs" type="Script" id=11]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -16,6 +18,7 @@ mode = 0
 textures = [ [ ExtResource( 3 ), ExtResource( 4 ) ], [ null, null ] ]
 
 [node name="santa_house" type="Spatial"]
+script = ExtResource( 11 )
 
 [node name="HTerrain" type="Spatial" parent="."]
 script = ExtResource( 1 )
@@ -36,18 +39,54 @@ shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.978789, 0.204872, 0, -0.204872, 0.978789, 0, 0, 0 )
 
-[node name="santas_house" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 103.227, 13.0145, 133.48 )
-
-[node name="fence_crooked" parent="." instance=ExtResource( 7 )]
-transform = Transform( 0.520447, 0, -0.468119, -0.0847375, 0.688436, -0.0942096, 0.460386, 0.126712, 0.511849, 146.215, 9.25174, 192.856 )
-
-[node name="fence_crooked2" parent="." instance=ExtResource( 7 )]
-transform = Transform( 0.698234, 0.0483683, 0.0114059, -0.0464153, 0.692143, -0.0937243, -0.017754, 0.0927315, 0.693603, 131.109, 10.1549, 195.013 )
-
 [node name="Player" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.41636, 0, -0.9092, 0, 1, 0, 0.9092, 0, 0.41636, 99.501, 12.987, 129.69 )
 
-[node name="raindeer_normal" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 97.6126, 12.9278, 144.534 )
+[node name="Mobs" type="Spatial" parent="."]
+
+[node name="raindeer_normal" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( 0.307586, 0, -0.255717, 0, 0.4, 0, 0.255717, 0, 0.307586, 92.8269, 12.9278, 149.393 )
 MoveSpeed = 3000.0
+
+[node name="raindeer_normal2" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( 0.257703, 0, 0.305924, 0, 0.4, 0, -0.305924, 0, 0.257703, 129.502, 12.9278, 133.652 )
+MoveSpeed = 3000.0
+
+[node name="raindeer_normal3" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( -0.0753914, 0, 0.392831, 0, 0.4, 0, -0.392831, 0, -0.0753914, 133.799, 9.99005, 109.307 )
+MoveSpeed = 3000.0
+Aggro = true
+
+[node name="raindeer_normal4" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( -0.388186, 0, 0.0964978, 0, 0.4, 0, -0.0964978, 0, -0.388186, 90.1224, 10.8543, 105.032 )
+MoveSpeed = 3000.0
+
+[node name="raindeer_normal5" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( -0.388186, 0, 0.0964978, 0, 0.4, 0, -0.0964978, 0, -0.388186, 67.3891, 9.72566, 108.663 )
+MoveSpeed = 3000.0
+Aggro = true
+
+[node name="raindeer_normal6" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( 0.00208043, 0, 0.399995, 0, 0.4, 0, -0.399995, 0, 0.00208043, 131.697, 10.7695, 187.396 )
+MoveSpeed = 3000.0
+
+[node name="raindeer_normal7" parent="Mobs" instance=ExtResource( 9 )]
+transform = Transform( 0.00208043, 0, 0.399995, 0, 0.4, 0, -0.399995, 0, 0.00208043, 101.966, 9.90866, 209.552 )
+MoveSpeed = 3000.0
+Aggro = true
+
+[node name="Npcs" type="Spatial" parent="."]
+
+[node name="helper" parent="Npcs" instance=ExtResource( 10 )]
+transform = Transform( 0.0143257, 0, -0.249589, 0, 0.25, 0, 0.249589, 0, 0.0143257, 108.064, 13.0033, 131.415 )
+
+[node name="Statics" type="Spatial" parent="."]
+
+[node name="santas_house" parent="Statics" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 103.227, 13.0145, 133.48 )
+
+[node name="fence_crooked" parent="Statics" instance=ExtResource( 7 )]
+transform = Transform( 0.520447, 0, -0.468119, -0.0847375, 0.688436, -0.0942096, 0.460386, 0.126712, 0.511849, 146.215, 9.25174, 192.856 )
+
+[node name="fence_crooked2" parent="Statics" instance=ExtResource( 7 )]
+transform = Transform( 0.698234, 0.0483683, 0.0114059, -0.0464153, 0.692143, -0.0937243, -0.017754, 0.0927315, 0.693603, 131.109, 10.1549, 195.013 )

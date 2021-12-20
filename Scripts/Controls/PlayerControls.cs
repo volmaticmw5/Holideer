@@ -19,6 +19,7 @@ public class PlayerControls : KinematicBody
     private bool isJumping = false;
     private AnimationTree anim;
     private bool pushbackNextTick = false;
+    public bool canMove = true;
 
     public override void _Ready()
     {
@@ -31,7 +32,7 @@ public class PlayerControls : KinematicBody
     {
         if(@event is InputEventMouseButton btn)
         {
-            if(btn.IsPressed() && btn.ButtonIndex == 1 && !GameManager.Instance.oPlayer.isAttacking)
+            if(btn.IsPressed() && btn.ButtonIndex == 1 && !GameManager.Instance.oPlayer.isAttacking && canMove)
             {
                 if (GameManager.Instance.oPlayer.CurrentWeapon == null)
                     anim.Set("parameters/Punch/active", true);
@@ -70,7 +71,7 @@ public class PlayerControls : KinematicBody
 
         // Apply direction
         Vector3 direction = Vector3.Zero;
-        if(!GameManager.Instance.oPlayer.isAttacking)
+        if(!GameManager.Instance.oPlayer.isAttacking && canMove)
         {
             if (isJumping)
                 direction = (Transform.basis.z * motionTarget.y + Transform.basis.x * motionTarget.x) * MovementSpeedInAir;
@@ -80,7 +81,7 @@ public class PlayerControls : KinematicBody
         velocity += direction;
 
         // Jump
-        if (Input.IsKeyPressed((int)KeyList.Space) && IsOnFloor())
+        if (Input.IsKeyPressed((int)KeyList.Space) && IsOnFloor() && canMove)
         {
             if (!isJumping && !GameManager.Instance.oPlayer.isAttacking)
             {
@@ -126,6 +127,13 @@ public class PlayerControls : KinematicBody
 
         velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), false, 3);
         velocity = Vector3.Zero;
+
+        if(!canMove)
+        {
+            anim.Set("parameters/Jump/active", false);
+            anim.Set("parameters/Move/blend_position", 0f);
+            anim.Set("parameters/GroundState/current", 1);
+        }
     }
 
     public void GetPushedBack()
