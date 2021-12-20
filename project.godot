@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Holideer"
-run/main_scene="res://Maps/TestMap.tscn"
+run/main_scene="res://Maps/santa_house.tscn"
 config/icon="res://icon.png"
 
 [autoload]

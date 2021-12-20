@@ -18,6 +18,7 @@ public class PlayerControls : KinematicBody
     private int jumpTimeLeft;
     private bool isJumping = false;
     private AnimationTree anim;
+    private bool pushbackNextTick = false;
 
     public override void _Ready()
     {
@@ -112,10 +113,23 @@ public class PlayerControls : KinematicBody
         if (wasFallingPreviousTick && IsOnFloor())
             wasFallingPreviousTick = false;
 
+        // Pushback
+        if(pushbackNextTick)
+        {
+            pushbackNextTick = false;
+            Random rnd = new Random();
+            velocity += new Vector3(rnd.Next(100,3000), 5000f, rnd.Next(100,3000));
+        }
+
         // Apply delta. HAS TO BE LAST
         velocity *= delta;
 
         velocity = MoveAndSlide(velocity, new Vector3(0, 1, 0), false, 3);
         velocity = Vector3.Zero;
+    }
+
+    public void GetPushedBack()
+    {
+        pushbackNextTick = true;
     }
 }

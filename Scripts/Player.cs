@@ -9,6 +9,10 @@ public enum WEAPON
 
 public class Player : Node
 {
+    [Export] public NodePath KinematicBd;
+    private PlayerControls playerControls;
+    [Export] public NodePath pCamera;
+    public oCamera oCamera;
     [Export] public NodePath pWeaponAttatch;
     private BoneAttachment weaponAttatch;
 
@@ -26,6 +30,8 @@ public class Player : Node
             GameManager.Instance.oPlayer = this;
 
         weaponAttatch = GetNode<BoneAttachment>(pWeaponAttatch);
+        playerControls = GetNode<PlayerControls>(KinematicBd);
+        oCamera = GetNode<oCamera>(pCamera);
     }
 
     public void PickupWeapon(WEAPON weapon)
@@ -71,5 +77,16 @@ public class Player : Node
         speed += CurrentWeapon == null ? 0f : CurrentWeapon.AttackSpeed;
 
         return speed;
+    }
+
+    public void GetAttacked(float damage)
+    {
+        this.Health -= damage;
+        // TODO:: effects
+    }
+
+    public void GetPushedBack()
+    {
+        playerControls.GetPushedBack();
     }
 }

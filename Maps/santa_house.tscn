@@ -1,22 +1,25 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Maps/data.hterrain" type="Resource" id=1]
-[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=2]
-[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=3]
-[ext_resource path="res://Scripts/oScene.cs" type="Script" id=4]
-[ext_resource path="res://Assets/Textures/uvs.jpg" type="Texture" id=5]
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Textures/snow.jpg" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/snow_rock.jpg" type="Texture" id=4]
+[ext_resource path="res://Prefabs/santas_house.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Maps/data.hterrain" type="Resource" id=6]
+[ext_resource path="res://Prefabs/fence_crooked.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/raindeer_normal.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Resource" id=1]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 mode = 0
-textures = [ [ ExtResource( 5 ) ], [ null ] ]
+textures = [ [ ExtResource( 3 ), ExtResource( 4 ) ], [ null, null ] ]
 
 [node name="santa_house" type="Spatial"]
-script = ExtResource( 4 )
 
 [node name="HTerrain" type="Spatial" parent="."]
-script = ExtResource( 2 )
-_terrain_data = ExtResource( 1 )
+script = ExtResource( 1 )
+_terrain_data = ExtResource( 6 )
 chunk_size = 32
 collision_enabled = true
 collision_layer = 1
@@ -25,7 +28,26 @@ shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null
 texture_set = SubResource( 1 )
-shader_params/u_ground_uv_scale = 20
+shader_params/u_ground_uv_scale = 5.0
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.978789, 0.204872, 0, -0.204872, 0.978789, 0, 0, 0 )
+
+[node name="santas_house" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 103.227, 13.0145, 133.48 )
+
+[node name="fence_crooked" parent="." instance=ExtResource( 7 )]
+transform = Transform( 0.520447, 0, -0.468119, -0.0847375, 0.688436, -0.0942096, 0.460386, 0.126712, 0.511849, 146.215, 9.25174, 192.856 )
+
+[node name="fence_crooked2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 0.698234, 0.0483683, 0.0114059, -0.0464153, 0.692143, -0.0937243, -0.017754, 0.0927315, 0.693603, 131.109, 10.1549, 195.013 )
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.41636, 0, -0.9092, 0, 1, 0, 0.9092, 0, 0.41636, 99.501, 12.987, 129.69 )
+
+[node name="raindeer_normal" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 97.6126, 12.9278, 144.534 )
+MoveSpeed = 3000.0
